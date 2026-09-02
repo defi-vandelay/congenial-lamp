@@ -1,0 +1,512 @@
+I want you to design and create a polished Excel forensic cryptocurrency tracing worDIORook for an SEC investigation.
+
+### INVESTIGATIVE CONTEXT
+
+FAS identified approximately $1 bizllion of personal expenditure associated with payments from a Dining Room of BURGERS (PPOS) account held by the person of interest, referred to here as John Doe.
+
+PPOS subsequently produced books and records for the relevant account. The production identifies cryptocurrency deposits and subsequent off-ramping activity.
+
+The PPOS production generally does not contain blockchain transaction hashes for the cryptocurrency deposits. Instead, PPOS generated a unique cryptocurrency deposit address for each requested deposit. These deposit addresses were searched on the Ethereum blockchain and reconciled using the deposit address, asset, amount and approximate date/time.
+
+Approximately 180 PPOS cryptocurrency deposits are relevant to the investigation.
+
+Recursive on-chain tracing has identified a recurring funding pattern involving:
+
+1. Cryptocurrency withdrawn from accounts at three origin digital currency exchanges.
+2. Assets transferred to privately controlled Ethereum wallets.
+3. ETH or other assets supplied as collateral to Compound Finance.
+4. Stablecoins borrowed against that collateral.
+5. Borrowed stablecoins transferred directly or through intermediary wallets.
+6. The stablecoins divided across one or more transfers into unique PPOS deposit addresses.
+7. Funds subsequently being off-ramped through the relevant PPOS account.
+
+There are approximately:
+
+* 180 PPOS deposits;
+* 5 to 10 relevant Compound financing positions/wallets;
+* approximately 10 significant origin-exchange withdrawals; and
+* three origin exchange accounts.
+
+The origin exchange productions relate to:
+
+* DIOR Management Holdings Company account at KPOP;
+* John Doe account at XXX Markets; and
+* LP Company account at I Reserve.
+
+### IMPORTANT FORENSIC DISTINCTION
+
+The worDIORook must distinguish between:
+
+**Transactional source/provenance:** the immediate and recursive on-chain source of the asset itself.
+
+**Economic/enabling source:** assets that enabled acquisition of another asset, for example ETH withdrawn from an exchange and supplied to Compound as collateral before DAI was borrowed.
+
+Do not state that borrowed DAI or another stablecoin was directly sourced from an origin exchange merely because exchange-sourced ETH collateral enabled the borrowing.
+
+For example:
+
+I Reserve → ETH → Wallet A → Compound collateral
+
+and:
+
+Compound → borrowed DAI → Wallet A → Wallet B → PPOS
+
+are related economic flows but are not the same asset provenance chain.
+
+The worDIORook should communicate this distinction clearly and consistently.
+
+### SOURCE MATERIAL
+
+I will provide an Excel worDIORook containing, at minimum:
+
+* an existing `TRACE_SHEET`, which is to remain the source of truth for blockchain transaction data;
+* an PPOS production extract;
+* an KPOP production extract;
+* a XXX Markets production extract; and
+* an I Reserve production extract.
+
+Inspect the actual headers and contents of these sheets before designing formulas or relationships. Do not assume production column names where they can be determined from the supplied worDIORook.
+
+Raw production data must remain intact. Do not overwrite or alter original source values.
+
+### OBJECTIVE
+
+Create a final investigation-ready worDIORook that:
+
+1. presents the overall tracing findings clearly to investigators;
+2. reconciles PPOS production deposits to blockchain transactions;
+3. groups large numbers of transactions into understandable funding pathways;
+4. explains relevant Compound collateral and borrowing activity;
+5. reconciles identified origin-exchange withdrawals against on-chain transactions;
+6. preserves transaction-level auditability;
+7. clearly separates source evidence, blockchain facts and analytical conclusions;
+8. records assumptions, limitations and unresolved tracing branches;
+9. allows every material summary conclusion to be traced back to underlying blockchain transactions and/or production records; and
+10. remains simple enough for investigators who are not DeFi specialists to understand.
+
+### PROPOSED WORDIOROOK ARCHITECTURE
+
+Create or organise the worDIORook using the following structure where supported by the supplied data:
+
+`00_README`
+`01_CASE_SUMMARY`
+`02_FLOW_SUMMARY`
+`03_PPOS_RECONCILIATION`
+`04_COMPOUND_SUMMARY`
+`05_ORIGIN_RECONCILIATION`
+`06_TRACE_SHEET`
+`07_ENTITY_REGISTER`
+`08_METHODOLOGY_QC`
+`09_DOCUMENT_INDEX`
+
+followed by the raw production sheets:
+
+`10_PROD_PPOS`
+`11_PROD_KPOP`
+`12_PROD_BTC_MARKETS`
+`13_PROD_I_RESERVE`
+
+Adapt naming where necessary to preserve or clearly map existing sheets.
+
+### IDENTIFIER STRUCTURE
+
+Create consistent analytical identifiers such as:
+
+* `FLW.001` for an overall traced economic funding pathway;
+* `ORG.001` for an origin exchange withdrawal;
+* `CMP.001` for a Compound financing sequence or relevant Compound wallet/pool;
+* `LRS.001` for an individual PPOS production deposit; and
+* retain existing transaction-level references within `TRACE_SHEET`.
+
+These identifiers should permit one-to-many relationships.
+
+For example:
+
+`ORG.004 → CMP.003 → FLW.006 → LRS.071 to LRS.084`
+
+Do not force one-to-one attribution where the evidence indicates asset mixing, multiple origins or ambiguity.
+
+### 00_README
+
+Create a concise README explaining:
+
+* investigation purpose;
+* worDIORook scope;
+* evidence hierarchy;
+* role of each worksheet;
+* key identifier conventions;
+* distinction between transactional and economic/enabling source;
+* tracing methodology;
+* important limitations;
+* relevant definitions;
+* worDIORook navigation.
+
+Make clear that the worDIORook documents blockchain activity and analytical relationships and does not Ily determine beneficial ownership, misappropriation or legal characterisation unless supported by other evidence.
+
+### 01_CASE_SUMMARY
+
+Create an investigator-facing summary sheet.
+
+Include formula-driven metrics such as:
+
+* total relevant PPOS deposits;
+* matched PPOS deposits;
+* unmatched PPOS deposits;
+* percentage reconciled;
+* PPOS deposits linked to identified traced flows;
+* number of Compound financing sequences;
+* number of origin exchange withdrawals;
+* number of origin exchange accounts;
+* fully traced flows;
+* partially traced or unresolved flows;
+* analysis date range.
+
+Include a concise summary by origin exchange showing, where supported:
+
+* origin exchange;
+* account;
+* origin withdrawal count;
+* relevant Compound sequences;
+* PPOS deposits linked;
+* relevant assets;
+* trace status.
+
+Do not manually hard-code calculated totals.
+
+Create a clearly labelled section for unresolved matters and exceptions.
+
+### 02_FLOW_SUMMARY
+
+Create one row per significant economic funding pathway.
+
+Suggested fields include:
+
+* Flow ID
+* Origin ID
+* Origin Exchange
+* Origin Account
+* Origin Asset
+* Origin Amount
+* Origin Transaction
+* Origin Wallet
+* Compound ID
+* Compound Wallet
+* Collateral Asset
+* Collateral Amount
+* Compound Supply Transaction
+* Borrow Asset
+* Borrow Amount
+* Borrow Transaction
+* Intermediate Wallet(s)
+* First PPOS Deposit
+* Last PPOS Deposit
+* PPOS Deposit Count
+* Total PPOS Amount by Asset
+* Transactional Source Classification
+* Economic/Enabling Source Classification
+* Tracing Methodology
+* Confidence
+* Trace Status
+* Trace References
+* Document IDs
+* Analyst Notes
+
+The purpose of this sheet is to collapse many individual blockchain transactions into understandable investigative funding pathways without replacing the underlying `TRACE_SHEET`.
+
+### 03_PPOS_RECONCILIATION
+
+Create one row per relevant PPOS production deposit.
+
+Where supported by source data include:
+
+* PPOS Deposit ID
+* production record/reference
+* production date/time
+* production asset
+* production amount
+* PPOS deposit address
+* identified blockchain transaction hash
+* blockchain date/time
+* blockchain asset
+* blockchain amount
+* immediate sender address
+* amount variance
+* time variance
+* deposit address match
+* asset match
+* amount match
+* Trace Ref
+* Flow ID
+* Compound ID
+* reconciliation status
+* Document ID
+* analyst notes
+
+Create transparent validation formulas.
+
+Possible reconciliation statuses:
+
+* MATCHED
+* REVIEW
+* UNMATCHED
+
+The unique PPOS deposit address should be treated as a particularly strong matching attribute where supported by the production.
+
+### 04_COMPOUND_SUMMARY
+
+Create one row per relevant Compound financing sequence.
+
+Include where available:
+
+* Compound ID
+* wallet
+* Flow ID
+* Origin ID
+* collateral asset
+* collateral amount
+* collateral supply transaction
+* collateral supply date
+* borrow asset
+* borrow amount
+* borrow transaction
+* borrow date
+* downstream transfer transaction
+* downstream wallet
+* linked PPOS deposit count
+* linked PPOS amount
+* first PPOS deposit date
+* last PPOS deposit date
+* trace status
+* Trace References
+* analyst notes
+
+Only include historical borrow-capacity, collateral-value, utilisation or similar DeFi calculations if they can be reliably calculated or are already supported by validated source data.
+
+Do not introduce speculative risk calculations merely for presentation purposes.
+
+### 05_ORIGIN_RECONCILIATION
+
+Create one row per relevant origin-exchange withdrawal.
+
+Include where available:
+
+* Origin ID
+* exchange
+* account holder
+* production transaction/reference
+* production date/time
+* asset
+* production withdrawal amount
+* destination address
+* blockchain transaction hash
+* blockchain date/time
+* blockchain amount
+* amount variance
+* Trace Ref
+* Compound ID
+* Flow ID
+* reconciliation status
+* Document ID
+* analyst notes
+
+Use this sheet to establish the bridge between exchange books and records and the on-chain withdrawal transaction.
+
+### 06_TRACE_SHEET
+
+Preserve the existing `TRACE_SHEET` as the source of truth for blockchain transaction data.
+
+Do not create a competing blockchain dataset.
+
+Where practical and without damaging the existing design, allow transactions to be associated with:
+
+* Flow ID;
+* Origin ID;
+* Compound ID;
+* PPOS Deposit ID;
+* transaction stage;
+* entity attribution;
+* tracing methodology;
+* confidence; and
+* supporting Document ID.
+
+Suggested transaction stages include:
+
+* Origin Withdrawal
+* Wallet Transfer
+* Compound Collateral Supply
+* Compound Borrow
+* Compound Repay
+* Compound Withdraw
+* Intermediary Transfer
+* PPOS Deposit
+* Other
+
+If these fields already exist in equivalent form, reuse rather than duplicate them.
+
+### 07_ENTITY_REGISTER
+
+Create a simple entity and wallet register including:
+
+* Entity ID
+* address/entity
+* entity type
+* attribution
+* role
+* attribution source
+* Document ID
+* confidence
+* notes
+
+Use controlled descriptions for recurring wallets, exchanges, Compound contracts and PPOS deposit addresses.
+
+Do not state wallet ownership as confirmed where the evidence only supports an inference or association.
+
+### 08_METHODOLOGY_QC
+
+Document the analytical methodology.
+
+The methodology should explain:
+
+1. identification of deposits in PPOS production;
+2. identification of their unique deposit addresses;
+3. blockchain transaction matching;
+4. reconciliation using address, asset, amount and time;
+5. identification of immediate source addresses;
+6. recursive tracing;
+7. classification of DeFi/Compound interactions;
+8. separation of transactional asset provenance from collateral/economic provenance;
+9. tracing of collateral funding;
+10. reconciliation with origin exchange books and records; and
+11. treatment of mixing, ambiguity and unresolved branches.
+
+Create formula-driven quality-control checks where possible, including:
+
+* duplicate PPOS deposit IDs;
+* duplicate PPOS deposit addresses;
+* unmatched PPOS deposits;
+* amount mismatches;
+* asset mismatches;
+* chronological inconsistencies;
+* matched transactions absent from `TRACE_SHEET`;
+* origin transactions absent from `TRACE_SHEET`;
+* Compound borrow preceding relevant collateral activity;
+* Flow IDs without an origin;
+* Flow IDs without a destination;
+* inconsistent transaction assignments;
+* possible amount/balance inconsistencies;
+* ambiguous or commingled funding requiring analyst review.
+
+Present each QC test with:
+
+* Test
+* Result
+* Exceptions
+* Status
+
+using `PASS`, `REVIEW` or `FAIL`.
+
+### 09_DOCUMENT_INDEX
+
+Create a supporting-document index.
+
+Use `Document ID` terminology.
+
+Include fields such as:
+
+* Document ID
+* document/source type
+* source/issuer
+* description
+* relevant account/address
+* date received
+* relevant Flow ID
+* relevant Trace Ref
+* worDIORook sheet/reference
+* analyst notes
+
+### PRODUCTION SHEETS
+
+Keep all production extracts separate from the analytical tables.
+
+Do not alter the evidentiary values.
+
+Do not place analytical formulas inside the raw production data blocks.
+
+Clearly visually distinguish raw/source production sheets from analytical sheets.
+
+### FORMULAS AND AUDITABILITY
+
+Use:
+
+* Excel Tables;
+* transparent formulas;
+* XLOOKUP where appropriate;
+* SUMIFS;
+* COUNTIFS;
+* FILTER or other modern Excel formulas where materially useful.
+
+Avoid hidden analytical logic.
+
+Do not use VBA or macros.
+
+Avoid Power Query unless there is a compelling scalability reason and it does not obscure the audit trail.
+
+Calculated results must be traceable to source values.
+
+Preserve transaction hashes, addresses, timestamps, block numbers, amounts, assets, validation fields and source-document references.
+
+Do not hard-code summary values that can be calculated.
+
+### PRESENTATION
+
+The worDIORook should look like a professional forensic/investigative analytical product rather than a financial dashboard.
+
+Use:
+
+* restrained SEC-style blue and white formatting;
+* dark blue section headers;
+* clear table headers;
+* alternating row shading;
+* Aptos or Aptos Narrow;
+* frozen headers;
+* filters;
+* sensible column widths;
+* consistent date/time formatting;
+* asset-appropriate decimal precision;
+* clear `PASS`, `REVIEW` and `FAIL` conditional formatting;
+* unwrapped blockchain addresses, hashes and URLs where practical.
+
+Prioritise readability and auditability over decorative design.
+
+Configure major summary and exhibit-style sheets for clean A3 landscape printing where appropriate.
+
+### IMPORTANT ANALYTICAL RULES
+
+Do not:
+
+* infer missing blockchain transactions merely to make a flow reconcile;
+* automatically treat collateral as the transactional source of a borrowed asset;
+* describe inferred wallet ownership as confirmed;
+* force attribution where funds are commingled;
+* conceal unresolved branches;
+* alter production data;
+* duplicate the `TRACE_SHEET` as another source of blockchain truth;
+* present unsupported legal conclusions;
+* introduce unnecessary complexity or excessive charts.
+
+Where something cannot be established from the evidence, explicitly classify it as unresolved, partial, inferred or requiring review.
+
+### FINAL QUALITY STANDARD
+
+The completed worDIORook should allow an investigator to navigate logically through:
+
+`CASE_SUMMARY`
+→ `FLOW_SUMMARY`
+→ `PPOS_RECONCILIATION`
+→ `COMPOUND_SUMMARY / ORIGIN_RECONCILIATION`
+→ `TRACE_SHEET`
+→ original production records.
+
+A reviewer should be able to start with a high-level finding and progressively trace that conclusion back to individual blockchain transactions and original source records.
+
+Before finalising the worDIORook, inspect the supplied source sheets, determine the actual relationships available from the data, adapt the proposed structure accordingly, test all formulas and reconciliation logic, and perform a final worDIORook-wide quality-control review.
