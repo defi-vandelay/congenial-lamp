@@ -1,8 +1,8 @@
 # congenial-lamp
 
-## this repo and project was created to test idea but was unsuccessful. Do not recommend using.
+## revisiting this... this repo and project was created to test idea but was unsuccessful. Recent improvements in excel-based agentic workflows have meant I'd expect this workflow to be close to workable, or at least, closer than before.
 
-# Prompt for Excelt Create
+# Prompt for Excel Create //
 
 Build a new Excel 365 workbook template for **Congenial-lamp v2 account analysis**.
 
